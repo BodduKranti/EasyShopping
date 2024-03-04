@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primaryColor: #ec6a0a;
+    --secondaryColor: #29abe2;
+    --blackColor: #000000;
+    --whiteColor: #ffffff;
+    --PrimaryFont: "Outfit", sans-serif;
+    --fontWeight100: 100;
+    --fontWeight200: 200;
+    --fontWeight300: 300;
+    --fontWeight400: 400;
+    --fontWeight500: 500;
+    --fontWeight600: 600;
+    --fontWeight700: 700;
+    --fontWeight800: 800;
+    --borderColor: #ecf0f4;
+    --bannerColor: #ECF4FE;
+}
+
+@layer utilities {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+        font-family: var(--PrimaryFont);
+    }
+
+    .text-balance {
+        text-wrap: balance;
+        /* @apply bg-[var(--primaryColor)] */
+    }
+
+    .bg-primaryColor {
+        @apply bg-[var(--primaryColor)]
+    }
+
+    input,
+    select,
+    textarea {
+        @apply py-2 px-4 border-[#dadfe3] border-4 rounded-md
+    }
+}
+
+@layer components {
+    .container {
+        @apply w-full md:max-w-[1440px] mx-auto px-4 md:px-6
+    }
+
+
+
+    .btnPrimary {
+        @apply bg-[var(--primaryColor)] py-3 px-4 rounded-md hover:bg-orange-600 text-white
+    }
+
+    .btnSecondary {
+        @apply bg-[var(--secondaryColor)] py-3 px-4 rounded-md hover:bg-blue-600 text-white
+    }
+
+    .bannerBg {
+        @apply bg-[var(--bannerColor)] p-3 rounded-xl
+    }
+
+    .bannerTitle {
+        @apply text-[#313574]
+    }
+}
