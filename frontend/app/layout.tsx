@@ -4,6 +4,7 @@ import "./layout.scss";
 import { Footer, Header } from "./component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ReduxProvider from "./ReduxStore/ReduxtProvider/ReduxProvider";
 
 const Outfitfont = Outfit({
     subsets: ["latin"],
@@ -26,9 +27,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={Outfitfont.className}>
-                <Header />
-                {children}
-                <Footer />
+                <ReduxProvider>
+                    <Header />
+                    {children}
+                    <Footer />
+                </ReduxProvider>
             </body>
         </html>
     );

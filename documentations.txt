@@ -14,3 +14,13 @@ next js typescript ecommerce website
 https://motta.uix.store/electronic/
 
 #ecf0f4
+
+===============================================
+Next js Authentication
+===============================================
+1. shadcn/ui
+2. npm i next-auth@beta
+
+===============================================
+
+===============================================
