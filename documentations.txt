@@ -1,0 +1,16 @@
+===============================================
+next js typescript ecommerce website 
+===============================================
+1. npx create-next-app@latest
+2. npm i axios react-icons react-quill 
+3. npm install @reduxjs/toolkit react-redux
+4. npm i react-quill
+5. npm i react-slick --save
+6. npm i slick-carousel 
+7. npm i @types/react-slick [when we have use typescript then use this command]
+8. npm i @heroicons/react
+9. npm i @headlessui/react
+
+https://motta.uix.store/electronic/
+
+#ecf0f4
