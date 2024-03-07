@@ -20,6 +20,8 @@ Next js Authentication
 ===============================================
 1. shadcn/ui
 2. npm i next-auth@beta
+3. create on env file with .env.local
+4. 
 
 ===============================================
 
