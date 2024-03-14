@@ -8,6 +8,7 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdRemoveRedEye } from 'react
 import Slider from 'react-slick'
 import Quickpopup from '../QuickViewPop/Quickpopup'
 import ProductDetails from './ProductDetails'
+import { Truncate } from '@/app/utility/Truncate'
 
 interface productItemDetails {
     _id: number,
@@ -77,7 +78,8 @@ const ProductItems: React.FC<productItemDetailsProps> = ({ prodItems }) => {
 
                     <div className='text-sm text-gray-500 my-2 group-hover:my-1 transition-all delay-700'>{prodItems.prodBrand}</div>
                     <Link href={`/product/${prodItems._id}`} className='text-black text-sm my-2 transition-all group-hover:my-1 '>
-                        {prodItems.prodTitle.slice(0, 20)}...
+                        {/* {prodItems.prodTitle.slice(0, 20)}... */}
+                        {Truncate(prodItems.prodTitle)}
                     </Link>
                     <div className='w-full flex gap-3 md:justify-start md:mt-4 mt-2 justify-center'>
                         <div className=' text-red-600 text-sm'>${prodItems.prodPrice}</div>

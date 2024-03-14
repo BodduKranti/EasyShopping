@@ -6,9 +6,15 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const ProductDetailsPage = () => {
+interface Iparams {
+    productid?: string // product id should be same name of the 'id' on the folder
+}
+
+const ProductDetailsPage = ({ params }: { params: Iparams }) => {
+    console.log('params', params.productid)
+
     const { productid } = useParams();
-    let getPrdbyid: any = Products.filter((list: any) => list._id === Number(productid))
+    let getPrdbyid: any = Products.filter((list: any) => list._id === Number(params.productid))
 
     const [prodTab, setProdTab] = useState<any>('Description')
     const TabsName = [

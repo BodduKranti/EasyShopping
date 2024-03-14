@@ -37,7 +37,7 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
     const [colorProd, setColorProd] = useState<any>(prodDetails.prodSub[0].prodColor)
     return (
         <>
-            <div className='w-full block md:flex gap-4 divide-y-2 space-y md:border-0' key={prodDetails._id}>
+            <div className='w-full block md:flex gap-4 divide-y space-y md:divide-y-0 md:space-y-0 md:border-0' key={prodDetails._id}>
                 <div className='w-full md:w-1/3 pb-4'>
                     <figure className='w-full h-[300px]'>
                         <Image

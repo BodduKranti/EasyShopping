@@ -28,7 +28,6 @@ const Navbar = () => {
                     </div>
 
 
-
                     <AuthNavigation />
 
                     <button
