@@ -10,7 +10,7 @@ next js typescript ecommerce website
 7. npm i @types/react-slick [when we have use typescript then use this command]
 8. npm i @heroicons/react
 9. npm i @headlessui/react
-
+10. npm install @mui/material @emotion/react @emotion/styled
 https://motta.uix.store/electronic/
 
 #ecf0f4

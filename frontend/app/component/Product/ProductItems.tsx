@@ -64,8 +64,8 @@ const ProductItems: React.FC<productItemDetailsProps> = ({ prodItems }) => {
                                 <>
                                     <figure className='w-full h-[150px] text-center mb-0 pb-0'>
                                         <Image
-                                            width={100}
-                                            height={100}
+                                            height={200}
+                                            width={200}
                                             src={list.prodThumb}
                                             alt=''
                                             className='inline w-full h-full object-contain  '
