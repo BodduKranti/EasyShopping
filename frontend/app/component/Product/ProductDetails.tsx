@@ -5,6 +5,7 @@ import { FaHeart } from "react-icons/fa6";
 
 import React, { useState } from 'react'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { formatPrice } from '@/app/utility/formatPrice';
 
 interface productDetailsInterface {
     _id: number,
@@ -116,11 +117,12 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
                     <div className='w-full flex justify-between items-end my-2'>
                         <div className=''>
                             <div className='text-xl font-bold'>
-                                $ {prodDetails.prodPrice}
+                                {formatPrice(prodDetails.prodPrice)}
+                                {/* $ {prodDetails.prodPrice} */}
                             </div>
                             <div className='flex gap-4'>
-                                <span className=' line-through'>{prodDetails.prodBaseprice}</span>
-                                <span className=' text-red-500'>Save: $ {`${prodDetails.prodBaseprice - prodDetails.prodPrice}`}</span>
+                                <span className=' line-through'>{formatPrice(prodDetails.prodBaseprice)}</span>
+                                <span className=' text-red-500'>Save: {`${formatPrice(prodDetails.prodBaseprice - prodDetails.prodPrice)}`}</span>
                             </div>
                         </div>
 
@@ -152,13 +154,13 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
                     </div>
                     {/* <h3 className='text-md md:text-lg'>{prodDetails.prodBrand}</h3> */}
                     <div className='flex gap-4'>
-                        <button className='btnPrimary  !py-2 inline-block'>
+                        <button className='btnPrimary w-[150px]  !py-2 inline-block'>
                             <ShoppingCartIcon
                                 className='w-5 h-5 float-start me-2'
                             />
                             <span className='hidden md:block'> Add to Cart</span>
                         </button>
-                        <button className='btnSecondary !py-2 flex gap-4'>Buy Know</button>
+                        <button className='btnSecondary !py-2 flex gap-4 hover:bg-[#3faede]'>Buy Know</button>
                         <button className='!py-2 flex gap-4'>
                             {prodDetails.prodWishlist === 0 ? <>
                                 <FaRegHeart className='w-7 h-7 text-[#29abe2]' />

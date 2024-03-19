@@ -2,13 +2,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { BsEyeSlash } from 'react-icons/bs'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdRemoveRedEye } from 'react-icons/md'
 
 import Slider from 'react-slick'
 import Quickpopup from '../QuickViewPop/Quickpopup'
 import ProductDetails from './ProductDetails'
 import { Truncate } from '@/app/utility/Truncate'
+import { formatPrice } from '@/app/utility/formatPrice'
 
 interface productItemDetails {
     _id: number,
@@ -82,9 +82,10 @@ const ProductItems: React.FC<productItemDetailsProps> = ({ prodItems }) => {
                         {Truncate(prodItems.prodTitle)}
                     </Link>
                     <div className='w-full flex gap-3 md:justify-start md:mt-4 mt-2 justify-center'>
-                        <div className=' text-red-600 text-sm'>${prodItems.prodPrice}</div>
+                        <div className=' text-red-600 text-sm'>{formatPrice(prodItems.prodPrice)}</div>
                         <div className='text-gray-600 text-sm line-through'>
-                            ${prodItems.prodBaseprice}
+                            {/* ${prodItems.prodBaseprice} */}
+                            {formatPrice(prodItems.prodBaseprice)}
                         </div>
                     </div>
 

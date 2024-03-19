@@ -2,7 +2,11 @@ import React from 'react'
 interface innerPagetitle {
     pageTitle: string,
 }
-const Innerpagehero: React.FC<innerPagetitle> = ({ pageTitle }) => {
+
+
+const Innerpagehero: React.FC<innerPagetitle> = ({
+    pageTitle
+}) => {
     var decodedText = decodeURIComponent(pageTitle);
     return (
         <>
