@@ -6,15 +6,17 @@ import { getProductcontroller } from '../ReduxController/controller'
 export const getProductThunk = createAsyncThunk('getallProducts', getProductcontroller)
 
 export interface productSliceDetails {
-    productStore: [],
+    productStore: any[],
     prodById: {},
-    status: string
+    status: string,
+    cartItems: any[]
 }
 
 const initialState: productSliceDetails = {
     productStore: [],
     prodById: {},
-    status: ''
+    status: '',
+    cartItems: []
 }
 
 const productSlice = createSlice({
@@ -23,6 +25,10 @@ const productSlice = createSlice({
     reducers: {
         showLoading: (state, action) => {
             state.status = action.payload
+        },
+        addToCartItem: (state, action: PayloadAction<any>) => {
+            state.cartItems = [...state.cartItems, action.payload]
+            console.log(state.cartItems)
         }
     },
     extraReducers: (build) => {
@@ -39,5 +45,5 @@ const productSlice = createSlice({
     }
 })
 
-export const { showLoading } = productSlice.actions
+export const { showLoading, addToCartItem } = productSlice.actions
 export default productSlice.reducer

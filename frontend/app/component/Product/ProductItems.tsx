@@ -3,12 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdRemoveRedEye } from 'react-icons/md'
-
 import Slider from 'react-slick'
 import Quickpopup from '../QuickViewPop/Quickpopup'
 import ProductDetails from './ProductDetails'
 import { Truncate } from '@/app/utility/Truncate'
 import { formatPrice } from '@/app/utility/formatPrice'
+import ProductReviewRating from './ProductReviewRating'
 
 interface productItemDetails {
     _id: number,
@@ -30,7 +30,8 @@ interface productItemDetails {
                 }
             ]
         }
-    ]
+    ],
+    reviews: []
 }
 
 interface productItemDetailsProps {
@@ -81,13 +82,23 @@ const ProductItems: React.FC<productItemDetailsProps> = ({ prodItems }) => {
                         {/* {prodItems.prodTitle.slice(0, 20)}... */}
                         {Truncate(prodItems.prodTitle)}
                     </Link>
-                    <div className='w-full flex gap-3 md:justify-start md:mt-4 mt-2 justify-center'>
+
+                    {/* reviews */}
+
+                    <ProductReviewRating
+                        prodReviews={prodItems.reviews}
+                    />
+                    <div className='w-full flex gap-3 md:justify-start justify-center'>
                         <div className=' text-red-600 text-sm'>{formatPrice(prodItems.prodPrice)}</div>
                         <div className='text-gray-600 text-sm line-through'>
                             {/* ${prodItems.prodBaseprice} */}
                             {formatPrice(prodItems.prodBaseprice)}
                         </div>
                     </div>
+
+
+
+
 
                     <div className=' absolute flex items-center py-1 justify-center  transition-all delay-500 -bottom-[100%] left-0 w-full h-auto group-hover:bottom-0 bg-[#ec680a76] z-10'>
                         <div

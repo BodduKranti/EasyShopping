@@ -3,9 +3,12 @@ import Image from 'next/image'
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { formatPrice } from '@/app/utility/formatPrice';
+import ProductReviewRating from './ProductReviewRating';
+import { useAppDispatch } from '@/app/ReduxStore/ReduxHook/ReduxHooks';
+import { addToCartItem } from '@/app/ReduxStore/ReduxSlices/ProductSlice';
 
 interface productDetailsInterface {
     _id: number,
@@ -28,7 +31,8 @@ interface productDetailsInterface {
                 }
             ]
         }
-    ]
+    ],
+    reviews: []
 }
 interface productDetailsProps {
     prodDetails: productDetailsInterface
@@ -36,6 +40,28 @@ interface productDetailsProps {
 const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
     const [colorThumb, setColorThumb] = useState<any>(prodDetails.prodSub[0].prodThumb)
     const [colorProd, setColorProd] = useState<any>(prodDetails.prodSub[0].prodColor)
+
+    const dispatch = useAppDispatch()
+
+    const colorSelectThumb = useCallback((list: any) => {
+        setColorProd(list.prodColor)
+        console.log(list.prodInnerThumb[0].prodGall)
+        setColorThumb(list.prodInnerThumb[0].prodGall)
+    }, [colorThumb, colorProd])
+
+    const addToCart = (data: any) => {
+        let finalData = {
+            _id: data._id,
+            prodThumb: colorThumb,
+            prodTitle: data.prodTitle,
+            prodQty: data.prodQty,
+            prodPrice: data.prodPrice,
+            prodTotal: data.prodQty * data.prodPrice
+        }
+        dispatch(addToCartItem(finalData))
+    }
+
+    console.log(prodDetails)
     return (
         <>
             <div className='w-full block md:flex gap-4 divide-y space-y md:divide-y-0 md:space-y-0 md:border-0' key={prodDetails._id}>
@@ -52,32 +78,23 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
                     <div className='gallery flex gap-3 mt-3'>
                         {prodDetails.prodSub && prodDetails.prodSub.filter((list: any) => list.prodColor === colorProd).map((data: any) => (
                             <>
-                                {data.prodInnerThumb.length > 0 ?
+                                {data.prodInnerThumb.length > 0 && data.prodInnerThumb.map((data: any) => (
                                     <>
-                                        {
-                                            data.prodInnerThumb.map((data: any) => (
-                                                <>
-                                                    <div className={`${data.prodGall === colorThumb ? ' border-blue-700 border-2' : 'border-gray-500'} imgThumb w-[40px] border h-[40px] p-1 cursor-pointer`} style={{ borderColor: `${colorProd}` }}>
-                                                        <figure className='w-full h-full'
-                                                            onClick={() => setColorThumb(data.prodGall)}
-                                                        >
-                                                            <Image
-                                                                width={100}
-                                                                height={100}
-                                                                alt=''
-                                                                src={`${data.prodGall}`}
-                                                                className='w-full h-full object-contain'
-                                                            />
-                                                        </figure>
-                                                    </div>
-                                                </>
-                                            ))
-                                        }
+                                        <div className={`${data.prodGall === colorThumb ? ' border-blue-700 border-2' : 'border-gray-500'} imgThumb w-[40px] border h-[40px] p-1 cursor-pointer`} style={{ borderColor: `${colorProd}` }}>
+                                            <figure className='w-full h-full'
+                                                onClick={() => setColorThumb(data.prodGall)}
+                                            >
+                                                <Image
+                                                    width={100}
+                                                    height={100}
+                                                    alt=''
+                                                    src={`${data.prodGall}`}
+                                                    className='w-full h-full object-contain'
+                                                />
+                                            </figure>
+                                        </div>
                                     </>
-                                    :
-                                    <>
-
-                                    </>
+                                ))
                                 }
                             </>
                         ))}
@@ -90,31 +107,27 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
                         <span>Category: {prodDetails.prodCat}</span>
                         <span>Brand: {prodDetails.prodBrand}</span>
                     </div>
-                    {prodDetails.prodSub[0].prodColor !== '' ? <>
-                        <div className='w-full flex gap-2 my-2'>
-                            <span>color:</span>
-                            {prodDetails.prodSub.map((list: any) => (
-                                <>
-                                    <div className={`${list.prodColor === colorProd ? 'border p-1' : ''} w-[25px] h-[25px] rounded-full cursor-pointer`} style={{ borderColor: `${colorProd}` }}>
-                                        <div className='w-full h-full rounded-full'
-                                            onClick={() => {
-                                                setColorProd(list.prodColor)
-                                                // let prodThumbimg = list
-                                                console.log(list.prodInnerThumb[0].prodGall)
-                                                // let prodThumimg = prodDetails.prodSub.filter((data: any) => data.prodColor === colorProd).map((items: any) => items.prodInnerThumb)
-                                                setColorThumb(list.prodInnerThumb[0].prodGall)
-                                            }}
-                                            style={{ background: `${list.prodColor}` }}>
-                                        </div>
+
+                    <ProductReviewRating
+                        prodReviews={prodDetails.reviews}
+                    />
+
+                    {prodDetails.prodSub[0].prodColor !== '' && <div className='w-full flex gap-2 my-2'>
+                        <span>color:</span>
+                        {prodDetails.prodSub.map((list: any) => (
+                            <>
+                                <div className={`${list.prodColor === colorProd ? 'border p-1' : ''} w-[25px] h-[25px] rounded-full cursor-pointer`} style={{ borderColor: `${colorProd}` }}>
+                                    <div className='w-full h-full rounded-full'
+                                        onClick={() => colorSelectThumb(list)}
+                                        style={{ background: `${list.prodColor}` }}>
                                     </div>
+                                </div>
+                            </>
+                        ))}
 
-                                </>
-                            ))}
+                    </div>}
 
-                        </div>
-                    </> : <></>}
-
-                    <div className='w-full flex justify-between items-end my-2'>
+                    <div className='w-full md:w-1/2  flex justify-between items-end my-5'>
                         <div className=''>
                             <div className='text-xl font-bold'>
                                 {formatPrice(prodDetails.prodPrice)}
@@ -131,30 +144,36 @@ const ProductDetails: React.FC<productDetailsProps> = ({ prodDetails }) => {
                         </div>
 
                     </div>
-                    <div className='w-full my-5'>
+                    {/* <div className='w-full my-5'>
                         <div className='w-[150px]'>
                             <div className='flex'>
                                 <button
+                                    onClick={() => setQty(Math.max(1, qty - 1))}
                                     className='text-sm rounded-md rounded-r-none bg-orange-600 hover:bg-orange-700 text-white px-1 py-1 flex items-center justify-center'>
                                     <MinusIcon className='w-[30px] h-[30px]' />
                                 </button>
-                                <input
-                                    type='text'
-                                    value={prodDetails.prodQty}
-                                    name='prodQty'
-                                    className='py-1 border-l-0 border-r-0 text-center px-3 border border-gray-200 w-full text-sm'
-                                />
+                                <div className='py-1 border-l-0 border-r-0 flex items-center justify-center
+                                text-center px-3 border border-gray-200 w-full text-sm'>
+                                    {qty}
+                                </div>
+
                                 <button
+                                    onClick={() => {
+
+                                        setQty(qty + 1)
+                                    }}
                                     className='text-sm rounded-md rounded-l-none bg-orange-600 hover:bg-orange-700 text-white px-1 py-1 flex items-center justify-center'>
                                     <PlusIcon className='w-[30px] h-[30px]' />
                                 </button>
                             </div>
                         </div>
 
-                    </div>
+                    </div> */}
                     {/* <h3 className='text-md md:text-lg'>{prodDetails.prodBrand}</h3> */}
                     <div className='flex gap-4'>
-                        <button className='btnPrimary w-[150px]  !py-2 inline-block'>
+                        <button
+                            onClick={() => addToCart(prodDetails)}
+                            className='btnPrimary w-[150px]  !py-2 inline-block'>
                             <ShoppingCartIcon
                                 className='w-5 h-5 float-start me-2'
                             />

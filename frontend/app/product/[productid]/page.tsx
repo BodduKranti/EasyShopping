@@ -26,7 +26,7 @@ const ProductDetailsPage = ({ params }: { params: Iparams }) => {
     useEffect(() => {
     }, [productid])
 
-    console.log(getPrdbyid[0].prodAdditionalInfo)
+    console.log(getPrdbyid)
     return (
         <>
             <div className='w-full shadow-sm bg-black text-white py-1'>
