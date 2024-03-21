@@ -59,7 +59,9 @@ const CartSlide: React.FC<CartSlideInterface> = ({ open, setOpen }) => {
                                                     </div>
                                                 </div>
 
-                                                <CartList />
+                                                <CartList
+
+                                                />
 
                                                 <Subtotal />
                                             </div>

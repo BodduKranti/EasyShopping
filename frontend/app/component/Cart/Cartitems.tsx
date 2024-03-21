@@ -1,3 +1,5 @@
+import { Truncate } from '@/app/utility/Truncate'
+import { formatPrice } from '@/app/utility/formatPrice'
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -33,11 +35,11 @@ const Cartitems: React.FC<CartitemsInterfaceProps> = ({ CartItemsProp }) => {
                     <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                                <Link href={`/product/${CartItemsProp._id}`}>{CartItemsProp.prodTitle}</Link>
+                                <Link href={`/product/${CartItemsProp._id}`}>{Truncate(CartItemsProp.prodTitle)}</Link>
                             </h3>
-                            <p className="ml-4">{CartItemsProp.prodPrice}</p>
+                            <p className="ml-4">{formatPrice(CartItemsProp.prodPrice)}</p>
                         </div>
-                        <p className="mt-1 text-sm text-gray-500">{CartItemsProp.prodTotal}</p>
+                        <p className="mt-1 text-sm text-gray-500">{formatPrice(CartItemsProp.prodTotal)}</p>
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
                         <p className="text-gray-500">Qty {CartItemsProp.prodQty}</p>

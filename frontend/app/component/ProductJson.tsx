@@ -29,6 +29,7 @@ export const Products = [
                 ]
             }
         ],
+        wishlist: 0,
         reviews: [
             {
                 id: "6499b4887402b0efd394d8f3",
@@ -118,6 +119,7 @@ export const Products = [
                 ]
             }
         ],
+        wishlist: 0,
         reviews: []
     },
     {
@@ -150,6 +152,7 @@ export const Products = [
                 ]
             }
         ],
+        wishlist: 0,
         reviews: [
             {
                 id: "64a65a6158b470c6e06959ee",

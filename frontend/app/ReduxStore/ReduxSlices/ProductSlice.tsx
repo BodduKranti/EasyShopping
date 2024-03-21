@@ -1,5 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { getProductcontroller } from '../ReduxController/controller'
+import { toast } from 'react-toastify'
+import { Truncate } from '@/app/utility/Truncate'
 
 
 // getall Product thunk
@@ -9,14 +11,16 @@ export interface productSliceDetails {
     productStore: any[],
     prodById: {},
     status: string,
-    cartItems: any[]
+    cartItems: any[],
+    cartProdImg: string
 }
 
 const initialState: productSliceDetails = {
     productStore: [],
     prodById: {},
     status: '',
-    cartItems: []
+    cartItems: [],
+    cartProdImg: ''
 }
 
 const productSlice = createSlice({
@@ -27,8 +31,21 @@ const productSlice = createSlice({
             state.status = action.payload
         },
         addToCartItem: (state, action: PayloadAction<any>) => {
-            state.cartItems = [...state.cartItems, action.payload]
-            console.log(state.cartItems)
+            console.log(action.payload)
+            state.cartProdImg = action.payload.prodThumb
+            const check = state.cartItems.some((el: any) => el._id === action.payload._id)
+            if (check) {
+                const index = state.cartItems.findIndex((el: any) => el._id === action.payload._id);
+                state.cartItems[index].prodQty = state.cartItems[index].prodQty + 1;
+                state.cartItems[index].prodTotal = state.cartItems[index].prodQty * state.cartItems[index].prodPrice;
+                toast.success(`You select ${state.cartItems[index].prodQty} Quantities in the ${Truncate(action.payload.prodTitle)} product`)
+            }
+            else {
+                state.cartItems = [...state.cartItems, action.payload]
+                toast.success(`${action.payload.prodTitle} added in to the cart successfully`)
+
+                // state.cartItems = [...state.cartItems, { ...action.payload, quantity: 1, total: action.payload.prodPrice }]
+            }
         }
     },
     extraReducers: (build) => {

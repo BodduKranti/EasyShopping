@@ -73,3 +73,10 @@
         @apply text-[#313574]
     }
 }
+
+.fly-cart {
+    z-index: 9999;
+    /*   transition: 2s; */
+    fliter: brightness(200%);
+    width: 200px;
+}

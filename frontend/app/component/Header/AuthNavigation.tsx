@@ -1,13 +1,19 @@
 "use client"
-import React, { useState } from 'react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import React, { useEffect, useRef, useState } from 'react'
+import { Bars3Icon, HeartIcon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import CartSlide from '../Cart/CartSlide'
 import Quickpopup from '../QuickViewPop/Quickpopup'
 import Searchsection from '../Search/Searchsection'
 import Image from 'next/image'
+import { useAppSelector } from '@/app/ReduxStore/ReduxHook/ReduxHooks'
+import { UseContextAuth } from '@/app/contextApi/ContextApi'
+import { useRouter } from 'next/navigation'
 
 const AuthNavigation = () => {
+    const router = useRouter()
+    const cartItems = useAppSelector((state) => state.product.cartItems)
+    const { headerCartPosition, setHeaderCartPosition } = UseContextAuth()
     const authLinks = [
         { linkName: "Sign In", href: "/signin" },
         { linkName: "Create account", href: "/register" }
@@ -15,9 +21,33 @@ const AuthNavigation = () => {
 
     const [open, setOpen] = useState<any>(false)
     const [quickpopOpen, setQuickpopOpen] = useState<any>(false)
+    // console.log(cartItems)
+
+    const itemListRef = useRef<HTMLDivElement>(null);
+    const cartHeaderPositionRef = useRef<HTMLDivElement>(null);
+    const handleClick = () => {
+        if (itemListRef.current && cartHeaderPositionRef.current) {
+            const leftOffset = itemListRef.current.offsetLeft;
+            const cartleftOffset = cartHeaderPositionRef.current.offsetLeft;
+
+            setHeaderCartPosition({
+                ...headerCartPosition,
+                hdrPosition: leftOffset,
+                hderCartPostion: cartleftOffset
+            })
+            console.log(leftOffset);
+        }
+    };
+    useEffect(() => {
+
+        handleClick();
+
+    }, [cartItems])
+
+    // console.log(headerCartPosition, cartItems)
     return (
         <>
-            <div className="ml-auto flex items-center">
+            <div className="ml-auto flex items-center" id="itemList">
                 <div className="hidden md:flex md:items-center md:justify-between md:gap-4
                  divide-x-2 mx-2
                 ">
@@ -60,15 +90,39 @@ const AuthNavigation = () => {
                 </div>
 
                 {/* Cart */}
-                <div className="ml-4 flow-root lg:ml-6">
+                <div className="ml-4 flow-root lg:ml-6" ref={itemListRef}>
                     <div
                         onClick={() => setOpen(true)}
-                        className="group -m-2 flex items-center p-2 cursor-pointer">
+                        className="group -m-2 flex items-center p-2 cursor-pointer"
+                        ref={cartHeaderPositionRef}
+                    >
                         <ShoppingBagIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                             aria-hidden="true"
+
                         />
-                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                            {cartItems.length > 0 ? cartItems.length : 0}
+                        </span>
+                        <span className="sr-only">items in cart, view bag</span>
+                    </div>
+                </div>
+
+                {/* Cart */}
+                <div className="ml-4 flow-root lg:ml-6" ref={itemListRef}>
+                    <div
+                        onClick={() => router.push('/wishlist')}
+                        className="group -m-2 flex items-center p-2 cursor-pointer"
+                        ref={cartHeaderPositionRef}
+                    >
+                        <HeartIcon
+                            className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                            aria-hidden="true"
+
+                        />
+                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                            {cartItems.length > 0 ? cartItems.length : 0}
+                        </span>
                         <span className="sr-only">items in cart, view bag</span>
                     </div>
                 </div>

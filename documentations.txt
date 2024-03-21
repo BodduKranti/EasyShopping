@@ -11,6 +11,7 @@ next js typescript ecommerce website
 8. npm i @heroicons/react
 9. npm i @headlessui/react
 10. npm install @mui/material @emotion/react @emotion/styled
+11. npm i react-toastify
 https://motta.uix.store/electronic/
 
 #ecf0f4

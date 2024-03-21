@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const LoginRouter = require('./routes/loginRegisterRouter');
+require('./connection/db')
 require('dotenv').config();
 
 const app = express();
@@ -12,3 +14,5 @@ PORT = process.env.PORT || 4002
 app.listen(PORT, () => {
     console.log(`This Project is running on ${PORT}`)
 })
+
+app.use('/auth', LoginRouter)

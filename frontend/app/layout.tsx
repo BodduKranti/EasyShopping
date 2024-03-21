@@ -5,6 +5,9 @@ import { Footer, Header } from "./component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ReduxProvider from "./ReduxStore/ReduxtProvider/ReduxProvider";
+import { ContextAuth } from "./contextApi/ContextApi";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Outfitfont = Outfit({
     subsets: ["latin"],
@@ -27,10 +30,15 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={Outfitfont.className}>
+                <ToastContainer
+                    className={"w-[300px]"}
+                />
                 <ReduxProvider>
-                    <Header />
-                    {children}
-                    <Footer />
+                    <ContextAuth>
+                        <Header />
+                        {children}
+                        <Footer />
+                    </ContextAuth>
                 </ReduxProvider>
             </body>
         </html>
