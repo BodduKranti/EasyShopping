@@ -1,14 +1,7 @@
 const loginRegisterUser = require("../model/userSchema")
 
 const register = (req, res) => {
-    console.log(req.body)
-    const {
-        userName,
-        userEmail,
-        userPassword,
-        userCnfPassword
-    } = req.body
-
+    const { userEmail } = req.body
 
     try {
 

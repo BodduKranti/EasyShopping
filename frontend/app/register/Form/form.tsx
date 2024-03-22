@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 const FormRegister = () => {
     const router = useRouter()
     const errMessageref = useRef<HTMLInputElement>(null)
+    const [loading, setLoading] = useState<any>(false)
     const [fields, setFields] = useState<any>({})
     const inputFormFields = (e: ChangeEvent<HTMLInputElement>) => {
         setFields({ ...fields, [e.target.name]: e.target.value })
@@ -15,29 +16,41 @@ const FormRegister = () => {
 
     const registerSubmit = async (e: any) => {
         e.preventDefault();
+        setLoading(true)
         // console.log(process.env.NEXT_PUBLIC_HOST_URL)
-        if (fields.userPassword === fields.userCnfPassword) {
-            await axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}auth/register`, fields)
-                .then((res: any) => {
-                    setTimeout(() => {
-                        toast.success('Successfully Registered');
-                        router.push('/signin')
-                    }, 2000)
-                })
-                .catch((err: any) => {
-                    toast.error('Something went wrong...')
-                })
+        if (fields.userPassword !== '' && fields.userName !== '' && fields.userEmail !== '' && fields.userCnfPassword !== '') {
+            if (fields.userPassword === fields.userCnfPassword) {
+                await axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}auth/register`, fields)
+                    .then((res: any) => {
+                        setTimeout(() => {
+                            toast.success('Successfully Registered');
+                            router.push('/signin')
+                            setLoading(false)
+                        }, 2000)
+                    })
+                    .catch((err: any) => {
+                        setTimeout(() => {
+                            setLoading(false)
+                            toast.error('Something went wrong...')
+                        }, 2000)
+
+                    })
+            }
+            else {
+                toast.error('Password should be same..')
+            }
         }
+
         else {
-            toast.error('Password should be same..')
+            toast.error("Please do not leave blank")
         }
+
 
     }
 
     return (
         <>
-            {errMessageref.current?.value}
-            <form className="space-y-6">
+            <form className="space-y-4 mt-4">
                 <div >
                     <Input
                         name='userName'
@@ -94,7 +107,11 @@ const FormRegister = () => {
                         onClick={registerSubmit}
                         className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Sign in
+                        {loading ?
+                            <>
+                                <div className='innerBtnloader'></div>
+                            </> : 'Register'}
+
                     </button>
                 </div>
             </form>
