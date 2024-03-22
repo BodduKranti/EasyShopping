@@ -7,20 +7,15 @@ import Link from 'next/link'
 const RegisterPage = () => {
     return (
         <>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
-                <div className='w-full block md:flex gap-4 login-box'>
-                    <div className='w-full md:w-1/2'>
-                        <div className='w-full text-center aspect-10'>
-                            <div className='inline-block w-36 '>
-                                <Image
-                                    fill
-                                    className='!relative w-36 h-32'
-                                    alt='logo'
-                                    src={'/images/logo.png'}
-                                />
-                            </div>
-
-                        </div>
+            <div className="container px-6 py-12 lg:px-8 ">
+                <div className='w-full block md:flex items-center gap-4'>
+                    <div className='w-full md:w-1/2 flex h-full items-center justify-center'>
+                        <Image
+                            fill
+                            className='!relative w-full h-full'
+                            alt='logo'
+                            src={'/images/clown_banner.svg'}
+                        />
                     </div>
                     <div className='w-full md:w-1/2 bg-[#29abe2] py-10 px-8'>
                         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

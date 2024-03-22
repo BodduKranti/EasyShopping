@@ -112,11 +112,7 @@ const FormRegister = () => {
                         type='password'
                         placeholder='Enter Your Confirm Password...'
                     />
-                    <div className="text-sm text-end mt-3">
-                        <div className="font-semibold text-white hover:text-white">
-                            Forgot password?
-                        </div>
-                    </div>
+
                 </div>
 
                 <div>
