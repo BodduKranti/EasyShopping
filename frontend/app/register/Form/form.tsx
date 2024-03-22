@@ -9,7 +9,12 @@ const FormRegister = () => {
     const router = useRouter()
     const errMessageref = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState<any>(false)
-    const [fields, setFields] = useState<any>({})
+    const [fields, setFields] = useState<any>({
+        userPassword: '',
+        userEmail: '',
+        userName: '',
+        userCnfPassword: ''
+    })
     const inputFormFields = (e: ChangeEvent<HTMLInputElement>) => {
         setFields({ ...fields, [e.target.name]: e.target.value })
     }
@@ -18,7 +23,12 @@ const FormRegister = () => {
         e.preventDefault();
         setLoading(true)
         // console.log(process.env.NEXT_PUBLIC_HOST_URL)
-        if (fields.userPassword !== '' && fields.userName !== '' && fields.userEmail !== '' && fields.userCnfPassword !== '') {
+        if (
+            fields.userPassword !== '' &&
+            fields.userName !== '' &&
+            fields.userEmail !== '' &&
+            fields.userCnfPassword !== ''
+        ) {
             if (fields.userPassword === fields.userCnfPassword) {
                 await axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}auth/register`, fields)
                     .then((res: any) => {
@@ -37,12 +47,20 @@ const FormRegister = () => {
                     })
             }
             else {
-                toast.error('Password should be same..')
+                setTimeout(() => {
+                    setLoading(false)
+                    toast.error('Password should be same..')
+                }, 2000)
+
             }
         }
 
         else {
-            toast.error("Please do not leave blank")
+            setTimeout(() => {
+                setLoading(false)
+                toast.error("Please do not leave blank")
+            }, 2000)
+
         }
 
 
@@ -105,7 +123,7 @@ const FormRegister = () => {
                     <button
                         type="submit"
                         onClick={registerSubmit}
-                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="flex w-full justify-center rounded-md bg-[#EE6909] border-0 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[rgb(238,105,9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         {loading ?
                             <>

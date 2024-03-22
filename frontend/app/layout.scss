@@ -112,3 +112,25 @@
         transform: rotate(1turn);
     }
 }
+
+.login-box {
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    // max-width: 1120px;
+    z-index: 0;
+}
+
+.login-box:before {
+    content: "";
+    width: 50%;
+    margin-left: auto;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(../public/images/login-registerbg.jpg) top left no-repeat;
+    background-size: contain;
+    z-index: -1;
+}
